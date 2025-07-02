@@ -4,6 +4,16 @@
   box-sizing: border-box;
 }
 
+/*
+meter::-webkit-meter-optimum-value {
+  background: red;
+}
+
+meter::-moz-meter-bar {
+  background: red;
+}
+  */
+
 canvas {
   border: 1px solid #000;
   background-color: #f0f0f0;
