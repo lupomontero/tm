@@ -22,15 +22,16 @@ ctx.arc(width / 2, height, height, 0, Math.PI * 2);
 ctx.stroke();
 
 const handleOrientation = (event) => {
-  let x = event.beta; // In degree in the range [-180,180)
-  let y = event.gamma; // In degree in the range [-90,90)
+  // let x = event.beta; // In degree in the range [-180,180)
+  // let y = event.gamma; // In degree in the range [-90,90)
+  const radians = event.beta * (Math.PI / 180);
 
   ctx.beginPath();
   ctx.moveTo(width / 2, height);
-  ctx.lineTo(150, 100);
+  ctx.lineTo(Math.sin(radians) * height, Math.cos(radians) * height);
   ctx.stroke();
 
-  output.textContent = `beta: ${x}\n`;
+  output.textContent = `beta: ${event.beta} ${radians}\n`;
   // output.textContent += `gamma: ${y}\n`;
 
   // Because we don't want to have the device upside down
