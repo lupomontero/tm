@@ -38,7 +38,7 @@ const handleOrientation = (event) => {
   ctx.stroke();
   ctx.closePath();
 
-  output.textContent = `beta: ${event.beta?.toFixed(2) || '?'}°\n`;
+  output.textContent = `${degrees?.toFixed(2) || '?'}°\n`;
   // output.textContent += `gamma: ${y}\n`;
 
   // Because we don't want to have the device upside down
