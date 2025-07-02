@@ -1,14 +1,16 @@
 const canvas = document.createElement('canvas');
 
-const output = Object.assign(document.createElement('pre'), {
+const orientationOutput = Object.assign(document.createElement('pre'), {
   className: 'output',
+});
+
+const accelerationOutput = Object.assign(document.createElement('pre'), {
+  className: 'output acceleration',
 });
 
 const ctx = canvas.getContext('2d');
 
 const handleOrientation = (event) => {
-  console.log(event.acceleration);
-
   const isLandscape = screen.orientation.type.startsWith('landscape');
   const width = screen.width;
   const height = width / 2;
@@ -40,11 +42,7 @@ const handleOrientation = (event) => {
   ctx.stroke();
   ctx.closePath();
 
-  output.textContent = `${degrees?.toFixed(2) || '?'}°
-X: ${event.acceleration?.x}
-Y: ${event.acceleration?.y}
-Z: ${event.acceleration?.z}`;
-  // output.textContent += `gamma: ${y}\n`;
+  orientationOutput.textContent = `${degrees?.toFixed(2) || '?'}°`;
 
   // Because we don't want to have the device upside down
   // We constrain the x value to the range [-90,90]
@@ -67,9 +65,15 @@ Z: ${event.acceleration?.z}`;
 };
 
 document.body.appendChild(canvas);
-document.body.appendChild(output);
+document.body.appendChild(orientationOutput);
+document.body.appendChild(accelerationOutput);
 
 window.addEventListener('deviceorientation', handleOrientation);
+window.addEventListener('devicemotion', (event) => {
+  accelerationOutput.textContent = `X: ${event.acceleration?.x}
+Y: ${event.acceleration?.y}
+Z: ${event.acceleration?.z}`;
+});
 
 // screen.orientation.addEventListener('change', (event) => {
 //   const type = event.target.type;

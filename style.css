@@ -16,3 +16,7 @@ canvas {
   color: black;
   font-size: 2em;
 }
+
+.output.acceleration {
+  top: 2em;
+}
