@@ -38,6 +38,7 @@ const handleOrientation = (event) => {
   ctx.moveTo(width / 2, height);
   ctx.lineTo(pointX, pointY);
   ctx.stroke();
+  ctx.closePath();
 
   output.textContent = `beta: ${event.beta} ${radians}\n`;
   // output.textContent += `gamma: ${y}\n`;
