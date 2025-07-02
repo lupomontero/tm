@@ -1,9 +1,4 @@
-const width = screen.width;
-const height = width / 2;
-const canvas = Object.assign(document.createElement('canvas'), {
-  width,
-  height,
-});
+const canvas = document.createElement('canvas');
 
 const output = Object.assign(document.createElement('div'), {
   style: {
@@ -17,8 +12,14 @@ const output = Object.assign(document.createElement('div'), {
 const ctx = canvas.getContext('2d');
 
 const handleOrientation = (event) => {
-  // let x = event.beta; // In degree in the range [-180,180)
-  // let y = event.gamma; // In degree in the range [-90,90)
+  const isLandscape = screen.orientation.type.startsWith('landscape');
+  const width = screen.width;
+  const height = width / 2;
+
+  Object.assign(canvas, { width, height });
+
+  // event.beta; // In degree in the range [-180,180)
+  // event.gamma; // In degree in the range [-90,90)
   const radians = event.beta * (Math.PI / 180);
 
   ctx.clearRect(0, 0, width, height);
@@ -66,4 +67,11 @@ const handleOrientation = (event) => {
 
 document.body.appendChild(canvas);
 document.body.appendChild(output);
+
 window.addEventListener('deviceorientation', handleOrientation);
+
+// screen.orientation.addEventListener('change', (event) => {
+//   const type = event.target.type;
+//   const angle = event.target.angle;
+//   console.log(`ScreenOrientation change: ${type}, ${angle} degrees.`);
+// });
