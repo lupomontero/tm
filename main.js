@@ -70,9 +70,9 @@ document.body.appendChild(accelerationOutput);
 
 window.addEventListener('deviceorientation', handleOrientation);
 window.addEventListener('devicemotion', (event) => {
-  accelerationOutput.textContent = `X: ${event.acceleration?.x}
-Y: ${event.acceleration?.y}
-Z: ${event.acceleration?.z}`;
+  accelerationOutput.textContent = `X: ${event.acceleration?.x?.toFixed(2)}
+Y: ${event.acceleration?.y?.toFixed(2)}
+Z: ${event.acceleration?.z?.toFixed(2)}`;
 });
 
 // screen.orientation.addEventListener('change', (event) => {

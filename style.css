@@ -18,5 +18,6 @@ canvas {
 }
 
 .output.acceleration {
-  top: 2em;
+  right: 10px;
+  text-align: right;
 }
