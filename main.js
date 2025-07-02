@@ -14,21 +14,29 @@ const output = Object.assign(document.createElement('div'), {
 });
 
 const ctx = canvas.getContext('2d');
-ctx.arc(width / 2, height, height, 0, Math.PI * 2);
-// ctx.fillStyle = 'red';
-// ctx.fill();
-// ctx.strokeStyle = 'black';
-// ctx.lineWidth = 2;
-ctx.stroke();
 
 const handleOrientation = (event) => {
   // let x = event.beta; // In degree in the range [-180,180)
   // let y = event.gamma; // In degree in the range [-90,90)
   const radians = event.beta * (Math.PI / 180);
 
+  ctx.clearRect(0, 0, width, height);
+
+  // Draw background circle
+  ctx.arc(width / 2, height, height, 0, Math.PI * 2);
+  // ctx.fillStyle = 'red';
+  // ctx.fill();
+  // ctx.strokeStyle = 'black';
+  // ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Draw needle
+  const pointX = (Math.sin(radians) * height) + (width / 2);
+  const pointY = height - (Math.cos(radians) * height);
+
   ctx.beginPath();
   ctx.moveTo(width / 2, height);
-  ctx.lineTo(Math.sin(radians) * height, Math.cos(radians) * height);
+  ctx.lineTo(pointX, pointY);
   ctx.stroke();
 
   output.textContent = `beta: ${event.beta} ${radians}\n`;
