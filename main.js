@@ -1,9 +1,10 @@
-const width = 200;
-const height = 100;
+const width = screen.width;
+const height = width / 2;
 const canvas = Object.assign(document.createElement('canvas'), {
   width,
   height,
 });
+
 const output = Object.assign(document.createElement('div'), {
   style: {
     position: 'absolute',
@@ -23,7 +24,7 @@ const handleOrientation = (event) => {
   ctx.clearRect(0, 0, width, height);
 
   // Draw background circle
-  ctx.arc(width / 2, height, height, 0, Math.PI * 2);
+  ctx.arc(height, height, height, 0, Math.PI * 2);
   // ctx.fillStyle = 'red';
   // ctx.fill();
   // ctx.strokeStyle = 'black';
