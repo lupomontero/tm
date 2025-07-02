@@ -8,3 +8,10 @@ canvas {
   border: 1px solid #000;
   background-color: #f0f0f0;
 }
+
+.output {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: black;
+}

@@ -1,12 +1,7 @@
 const canvas = document.createElement('canvas');
 
 const output = Object.assign(document.createElement('div'), {
-  style: {
-    position: 'absolute',
-    top: '10px',
-    left: '10px',
-    color: 'black',
-  },
+  className: 'output',
 });
 
 const ctx = canvas.getContext('2d');
@@ -20,7 +15,8 @@ const handleOrientation = (event) => {
 
   // event.beta; // In degree in the range [-180,180)
   // event.gamma; // In degree in the range [-90,90)
-  const radians = event.beta * (Math.PI / 180);
+  const degrees = isLandscape ? event.beta : event.gamma; // gamma for landscape, beta for portrait
+  const radians = degrees * (Math.PI / 180);
 
   ctx.clearRect(0, 0, width, height);
 
@@ -42,7 +38,7 @@ const handleOrientation = (event) => {
   ctx.stroke();
   ctx.closePath();
 
-  output.textContent = `beta: ${event.beta} ${radians}\n`;
+  output.textContent = `beta: ${event.beta}°\n`;
   // output.textContent += `gamma: ${y}\n`;
 
   // Because we don't want to have the device upside down
