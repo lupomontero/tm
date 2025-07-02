@@ -1,12 +1,14 @@
 const canvas = document.createElement('canvas');
 
-const output = Object.assign(document.createElement('div'), {
+const output = Object.assign(document.createElement('pre'), {
   className: 'output',
 });
 
 const ctx = canvas.getContext('2d');
 
 const handleOrientation = (event) => {
+  console.log(event.acceleration);
+
   const isLandscape = screen.orientation.type.startsWith('landscape');
   const width = screen.width;
   const height = width / 2;
@@ -38,7 +40,10 @@ const handleOrientation = (event) => {
   ctx.stroke();
   ctx.closePath();
 
-  output.textContent = `${degrees?.toFixed(2) || '?'}°\n`;
+  output.textContent = `${degrees?.toFixed(2) || '?'}°
+X: ${event.acceleration?.x}
+Y: ${event.acceleration?.y}
+Z: ${event.acceleration?.z}`;
   // output.textContent += `gamma: ${y}\n`;
 
   // Because we don't want to have the device upside down
