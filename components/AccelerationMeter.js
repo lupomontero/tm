@@ -2,6 +2,7 @@ class AccelerationMeter extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+
     this.shadowRoot.innerHTML = `
       <style>
         .meter {
@@ -43,6 +44,15 @@ class AccelerationMeter extends HTMLElement {
           left: 0;
           transform-origin: bottom center;
         }
+        .x > span {
+          background-color: blue;
+        }
+        .y > span {
+          background-color: green;
+        }
+        .z > span {
+          background-color: red;
+        }
       </style>
       <div class="meter">
         <div class="x axis">
@@ -56,17 +66,10 @@ class AccelerationMeter extends HTMLElement {
         </div>
       </div>
     `;
+
     this.spanX = this.shadowRoot.querySelector('.x > span');
     this.spanY = this.shadowRoot.querySelector('.y > span');
     this.spanZ = this.shadowRoot.querySelector('.z > span');
-
-    // this.spanX.style.bottom = '50%';
-    // this.spanX.style.left = '0';
-    // this.spanX.style.transformOrigin = 'bottom center';
-
-    this.spanX.style.backgroundColor = 'blue';
-    this.spanY.style.backgroundColor = 'green';
-    this.spanZ.style.backgroundColor = 'red';
   }
 
   connectedCallback() {
@@ -82,33 +85,21 @@ class AccelerationMeter extends HTMLElement {
   }
 
   handleMotion(event) {
-    // this.setAcceleration({
-    //   x: -1.3,
-    //   y: -0.3,
-    //   z: -0.5,
-    // });
-    this.setAcceleration(event.acceleration);
-  }
+    const { x = 0.5, y = 1, z = -0.5 } = event.acceleration;
+    // const { x = 0.5, y = 1, z = -0.5 } = {};
 
-  setAcceleration({ x, y, z }) {
     const percentX = Math.min(Math.abs((x * 100) / 1.5), 100);
     this.spanX.style.height = `${Math.round(percentX / 2)}%`;
-    this.spanX.textContent = `${x.toFixed(2)}`;
+    // this.spanX.textContent = `${x.toFixed(2)}`;
     this.spanX.style.transform = x < 0 ? 'rotate(180deg)' : 'none';
 
     const percentY = Math.min(Math.abs((y * 100) / 1.5), 100);
     this.spanY.style.height = `${Math.round(percentY / 2)}%`;
-    // this.spanY.textContent = `${y.toFixed(2)}`;
-    if (y < 0) {
-      this.spanY.style.transform = 'rotate(180deg)';
-    }
+    this.spanY.style.transform = y < 0 ? 'rotate(180deg)' : 'none';
 
     const percentZ = Math.min(Math.abs((z * 100) / 1.5), 100);
     this.spanZ.style.height = `${Math.round(percentZ / 2)}%`;
-    // this.spanZ.textContent = `${z.toFixed(2)}`;
-    if (z < 0) {
-      this.spanZ.style.transform = 'rotate(180deg)';
-    }
+    this.spanZ.style.transform = z < 0 ? 'rotate(180deg)' : 'none';
   }
 }
 
