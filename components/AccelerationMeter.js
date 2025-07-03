@@ -102,8 +102,8 @@ class AccelerationMeter extends HTMLElement {
   }
 
   handleMotion(event) {
-    // const { x, y, z } = event.acceleration;
-    const { x = 0.5, y = 1, z = -0.5 } = {};
+    const { x, y, z } = event.acceleration;
+    // const { x = 0.5, y = 1, z = -0.5 } = {};
 
     const isLandscape = screen.orientation.type.startsWith('landscape');
 
