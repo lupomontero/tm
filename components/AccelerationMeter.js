@@ -103,19 +103,6 @@ class AccelerationMeter extends HTMLElement {
     setAxisValue(this.spanX, isLandscape ? y : x);
     setAxisValue(this.spanY, isLandscape ? x : y);
     setAxisValue(this.spanZ, z);
-
-    // const percentX = Math.min(Math.abs((x * 100) / 1.5), 100);
-    // this.spanX.style.height = `${Math.round(percentX / 2)}%`;
-    // // this.spanX.textContent = `${x.toFixed(2)}`;
-    // this.spanX.style.transform = x < 0 ? 'rotate(180deg)' : 'none';
-
-    // const percentY = Math.min(Math.abs((y * 100) / 1.5), 100);
-    // this.spanY.style.height = `${Math.round(percentY / 2)}%`;
-    // this.spanY.style.transform = y < 0 ? 'rotate(180deg)' : 'none';
-
-    // const percentZ = Math.min(Math.abs((z * 100) / 1.5), 100);
-    // this.spanZ.style.height = `${Math.round(percentZ / 2)}%`;
-    // this.spanZ.style.transform = z < 0 ? 'rotate(180deg)' : 'none';
   }
 }
 
