@@ -42,10 +42,14 @@ class LeanAngleGauge extends HTMLElement {
     container.appendChild(this.output);
     this.shadowRoot.appendChild(container);
 
+    this.resize = this.resize.bind(this);
     this.handleOrientation = this.handleOrientation.bind(this);
   }
 
   connectedCallback() {
+    this.resize();
+    window.addEventListener('resize', this.resize);
+
     if (window.DeviceOrientationEvent) {
       window.addEventListener('deviceorientation', this.handleOrientation);
     } else {
@@ -54,18 +58,28 @@ class LeanAngleGauge extends HTMLElement {
   }
 
   disconnectedCallback() {
+    window.removeEventListener('resize', this.resize);
     window.removeEventListener('deviceorientation', this.handleOrientation);
+  }
+
+  resize() {
+    const isLandscape = screen.orientation.type.startsWith('landscape');
+    const width = Math.min(
+      isLandscape
+        ? this.parentElement.clientWidth / 2
+        : this.parentElement.clientWidth,
+      this.parentElement.clientHeight,
+    ) - 40; // Subtracting 40 for padding/margin
+    const height = width / 2;
+
+    Object.assign(this.canvas, { width, height });
   }
 
   handleOrientation(event) {
     const isLandscape = screen.orientation.type.startsWith('landscape');
-    const width = this.parentElement.clientWidth - 40;
-    const height = width / 2;
-
-    Object.assign(this.canvas, { width, height });
-
     const degrees = isLandscape ? event.beta : event.gamma; // gamma for landscape, beta for portrait
     const radians = degrees * (Math.PI / 180);
+    const { width, height } = this.canvas;
 
     this.ctx.clearRect(0, 0, width, height);
 

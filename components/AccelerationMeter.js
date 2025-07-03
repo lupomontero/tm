@@ -71,11 +71,13 @@ class AccelerationMeter extends HTMLElement {
     this.spanY = this.shadowRoot.querySelector('.y > span');
     this.spanZ = this.shadowRoot.querySelector('.z > span');
 
+    this.resize = this.resize.bind(this);
     this.handleMotion = this.handleMotion.bind(this);
   }
 
   connectedCallback() {
     this.resize();
+    window.addEventListener('resize', this.resize);
 
     if (window.DeviceMotionEvent) {
       window.addEventListener('devicemotion', this.handleMotion);
@@ -85,6 +87,7 @@ class AccelerationMeter extends HTMLElement {
   }
 
   disconnectedCallback() {
+    window.removeEventListener('resize', this.resize);
     window.removeEventListener('devicemotion', this.handleMotion);
   }
 
@@ -98,8 +101,6 @@ class AccelerationMeter extends HTMLElement {
   }
 
   handleMotion(event) {
-    this.resize();
-
     const { x, y, z } = event.acceleration;
     // const { x = 0.5, y = 1, z = -0.5 } = {};
 
