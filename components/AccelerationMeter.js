@@ -5,27 +5,61 @@ class AccelerationMeter extends HTMLElement {
     this.shadowRoot.innerHTML = `
       <style>
         .meter {
-          width: 100px;
-          height: 100px;
-          border: 2px solid black;
+          width: 80px;
+          height: 80px;
+          border: 1px solid #ddd;
           border-radius: 50%;
           position: relative;
         }
-        .needle {
-          width: 2px;
-          height: 50px;
-          background-color: red;
+        .axis {
           position: absolute;
-          top: 25px;
-          left: 49px;
+          width: 2px;
+          height: 80px;
+          background-color: #ccc;
+        }
+        .x {
+          bottom: 39px;
+          left: 0px;
           transform-origin: bottom center;
+          transform: rotate(90deg);
+        }
+        .y {
+          top: 0px;
+          left: 39px;
+          transform-origin: bottom center;
+        }
+        .z {
+          bottom: 10px;
+          left: 10px;
+          transform-origin: bottom center;
+          transform: rotate(45deg);
         }
       </style>
       <div class="meter">
-        <div class="needle"></div>
+        <div class="x axis">
+          <span></span>
+        </div>
+        <div class="y axis">
+          <span></span>
+        </div>
+        <div class="z axis">
+          <span></span>
+        </div>
       </div>
     `;
-    this.needle = this.shadowRoot.querySelector('.needle');
+    this.spanX = this.shadowRoot.querySelector('.x > span');
+    this.spanY = this.shadowRoot.querySelector('.y > span');
+    this.spanZ = this.shadowRoot.querySelector('.z > span');
+
+    this.spanX.style.display = 'inline-block';
+    this.spanX.style.height = '0%';
+    this.spanX.style.width = '100%';
+    this.spanX.style.position = 'absolute';
+    this.spanX.style.bottom = '50%';
+    this.spanX.style.left = '0';
+    this.spanX.style.transformOrigin = 'bottom center';
+
+    this.spanX.style.backgroundColor = 'blue';
   }
 
   connectedCallback() {
@@ -43,15 +77,21 @@ class AccelerationMeter extends HTMLElement {
   handleMotion(event) {
     const acceleration = event.acceleration;
 
-    if (acceleration && acceleration.x !== null && acceleration.y !== null) {
-      const value = Math.sqrt(acceleration.x ** 2 + acceleration.y ** 2);
-      this.setAcceleration(value);
-    }
+    console.log('Acceleration:', acceleration);
+    this.setAcceleration({
+      x: 0.9,
+      y: 0.3,
+      z: 0,
+    });
   }
 
-  setAcceleration(value) {
-    const angle = value * 180; // Convert to degrees
-    this.needle.style.transform = `rotate(${angle}deg)`;
+  setAcceleration({ x, y, z }) {
+    const percentX = x >= 1.5 ? 100 : Math.abs((x * 100) / 1.5);
+    this.spanX.style.height = `${percentX / 2}%`;
+
+    if (x < 0) {
+      this.spanX.style.transform = 'rotate(180deg)';
+    }
   }
 }
 

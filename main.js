@@ -7,9 +7,9 @@ const orientationOutput = Object.assign(document.createElement('pre'), {
   className: 'output',
 });
 
-const accelerationOutput = Object.assign(document.createElement('pre'), {
-  className: 'output acceleration',
-});
+// const accelerationOutput = Object.assign(document.createElement('pre'), {
+//   className: 'output acceleration',
+// });
 
 const accelerationMeter = Object.assign(document.createElement('acceleration-meter'), {
   className: 'acceleration-meter',
@@ -77,14 +77,14 @@ const handleOrientation = (event) => {
 };
 
 const handleMotion = (event) => {
-  accelerationOutput.textContent = `X: ${event.acceleration?.x?.toFixed(2)}
-Y: ${event.acceleration?.y?.toFixed(2)}
-Z: ${event.acceleration?.z?.toFixed(2)}`;
+  //   accelerationOutput.textContent = `X: ${event.acceleration?.x?.toFixed(2)}
+  // Y: ${event.acceleration?.y?.toFixed(2)}
+  // Z: ${event.acceleration?.z?.toFixed(2)}`;
 };
 
 document.body.appendChild(canvas);
 document.body.appendChild(orientationOutput);
-document.body.appendChild(accelerationOutput);
+// document.body.appendChild(accelerationOutput);
 document.body.appendChild(accelerationMeter);
 
 window.addEventListener('deviceorientation', handleOrientation);
