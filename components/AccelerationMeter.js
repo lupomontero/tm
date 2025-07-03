@@ -82,29 +82,32 @@ class AccelerationMeter extends HTMLElement {
   }
 
   handleMotion(event) {
-    // this.setAcceleration({
-    //   x: 1.3,
-    //   y: -0.3,
-    //   z: -0.5,
-    // });
-    this.setAcceleration(event.acceleration);
+    this.setAcceleration({
+      x: -1.3,
+      y: -0.3,
+      z: -0.5,
+    });
+    // this.setAcceleration(event.acceleration);
   }
 
   setAcceleration({ x, y, z }) {
     const percentX = Math.min(Math.abs((x * 100) / 1.5), 100);
     this.spanX.style.height = `${Math.round(percentX / 2)}%`;
+    this.spanX.textContent = `${x.toFixed(2)}`;
     if (x < 0) {
       this.spanX.style.transform = 'rotate(180deg)';
     }
 
     const percentY = Math.min(Math.abs((y * 100) / 1.5), 100);
     this.spanY.style.height = `${Math.round(percentY / 2)}%`;
+    // this.spanY.textContent = `${y.toFixed(2)}`;
     if (y < 0) {
       this.spanY.style.transform = 'rotate(180deg)';
     }
 
     const percentZ = Math.min(Math.abs((z * 100) / 1.5), 100);
     this.spanZ.style.height = `${Math.round(percentZ / 2)}%`;
+    // this.spanZ.textContent = `${z.toFixed(2)}`;
     if (z < 0) {
       this.spanZ.style.transform = 'rotate(180deg)';
     }
