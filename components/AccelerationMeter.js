@@ -37,11 +37,11 @@ class AccelerationMeter extends HTMLElement {
         }
         .axis > span {
           display: inline-block;
-          width: 100%;
+          width: 500%;
           height: 0%;
           position: absolute;
           bottom: 50%;
-          left: 0;
+          left: -2px;
           transform-origin: bottom center;
         }
         .x > span {

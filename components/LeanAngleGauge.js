@@ -104,7 +104,7 @@ class LeanAngleGauge extends HTMLElement {
     const pointX = (Math.sin(radians) * height) + (width / 2);
     const pointY = height - (Math.cos(radians) * height);
 
-    this.ctx.lineWidth = 2;
+    this.ctx.lineWidth = 5;
     this.ctx.beginPath();
     this.ctx.moveTo(width / 2, height);
     this.ctx.lineTo(pointX, pointY);
