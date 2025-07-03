@@ -1,7 +1,35 @@
+/* :root {
+  color-scheme: light dark;
+} */
+
+:root {
+  --primary-color: #302AE6;
+  --secondary-color: #536390;
+  --font-color: #424242;
+  --bg-color: #fff;
+  --bg-transparent: rgba(0, 0, 0, 0.2);
+  --heading-color: #292922;
+}
+
+[data-color-scheme="dark"] {
+  --primary-color: #9A97F3;
+  --secondary-color: #818cab;
+  --font-color: #e1e1ff;
+  --bg-color: #161625;
+  --bg-transparent: rgba(255, 255, 255, 0.2);
+  --heading-color: #818cab;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  font-family: monospace;
+  background-color: var(--bg-color);
+  color: var(--font-color);
 }
 
 .container {
@@ -31,9 +59,3 @@
     height: 100%;
   }
 }
-
-/* acceleration-meter {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-} */

@@ -2,6 +2,12 @@ class LeanAngleGauge extends HTMLElement {
   constructor() {
     super();
 
+    console.log(this.attributes);
+
+    //
+    this.min = 0;
+    this.max = 0;
+
     const container = Object.assign(document.createElement('div'), {
       className: 'container',
     });
@@ -26,15 +32,16 @@ class LeanAngleGauge extends HTMLElement {
       }
       .output {
         position: absolute;
-        bottom: 0;
+        bottom: 10px;
         left: 50%;
         transform: translate(-50%, 0);
         margin: 0;
         padding: 10px;
-        background-color: rgba(255, 255, 255, 0.8);
-        color: black;
+        background-color: var(--bg-transparent);
         font-size: 2em;
+        border-radius: 10px;
       }
+
       </style>
     `;
 
@@ -79,24 +86,35 @@ class LeanAngleGauge extends HTMLElement {
     const degrees = isLandscape ? event.beta : event.gamma; // gamma for landscape, beta for portrait
     const radians = degrees * (Math.PI / 180);
     const { width, height } = this.canvas;
+    const isDarkMode = document.documentElement.getAttribute('data-color-scheme') === 'dark';
 
     this.ctx.clearRect(0, 0, width, height);
 
     // Draw background circle
     this.ctx.arc(height, height, height, 0, Math.PI * 2);
-    // ctx.fillStyle = 'red';
-    // ctx.fill();
-    // ctx.strokeStyle = 'black';
-    // ctx.lineWidth = 2;
+    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+    this.ctx.fill();
+    this.ctx.strokeStyle = (
+      isDarkMode
+        ? 'rgba(255, 255, 255, 0.2)'
+        : 'rgba(0, 0, 0, 0.2)'
+    );
+    this.ctx.lineWidth = 1;
     this.ctx.stroke();
 
     // Draw needle
     const pointX = (Math.sin(radians) * height) + (width / 2);
     const pointY = height - (Math.cos(radians) * height);
 
+    this.ctx.lineWidth = 2;
     this.ctx.beginPath();
     this.ctx.moveTo(width / 2, height);
     this.ctx.lineTo(pointX, pointY);
+    this.ctx.strokeStyle = (
+      isDarkMode
+        ? 'rgba(255, 255, 255, 0.5)'
+        : 'rgba(0, 0, 0, 0.5)'
+    );
     this.ctx.stroke();
     this.ctx.closePath();
 

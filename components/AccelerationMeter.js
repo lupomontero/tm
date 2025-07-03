@@ -7,7 +7,7 @@ class AccelerationMeter extends HTMLElement {
         .container {
           width: 0;
           height: 0;
-          border: 1px solid #ddd;
+          border: 1px solid light-dark(#ddd, #444);
           border-radius: 50%;
           position: relative;
         }
@@ -15,7 +15,7 @@ class AccelerationMeter extends HTMLElement {
           position: absolute;
           width: 2px;
           height: 100%;
-          background-color: #ccc;
+          background-color: light-dark(#ccc, #555);
         }
         .x {
           bottom: 50%;
