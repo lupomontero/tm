@@ -7,20 +7,10 @@ const orientationOutput = Object.assign(document.createElement('pre'), {
   className: 'output',
 });
 
-// const accelerationOutput = Object.assign(document.createElement('pre'), {
-//   className: 'output acceleration',
-// });
-
-const accelerationMeter = Object.assign(document.createElement('acceleration-meter'), {
-  className: 'acceleration-meter',
-  min: -10,
-  max: 10,
-  value: 3,
-});
-
-// <meter id="fuel" min="0" max="100" low="33" high="66" optimum="80" value="50">
-//   at 50/100
-// </meter>
+const accelerationMeter = Object.assign(
+  document.createElement('acceleration-meter'),
+  { className: 'acceleration-meter' },
+);
 
 const handleOrientation = (event) => {
   const isLandscape = screen.orientation.type.startsWith('landscape');
@@ -76,22 +66,8 @@ const handleOrientation = (event) => {
   // ball.style.top = `${(maxX * x) / 180 - 10}px`; // rotating device around the x axis moves the ball vertically
 };
 
-const handleMotion = (event) => {
-  //   accelerationOutput.textContent = `X: ${event.acceleration?.x?.toFixed(2)}
-  // Y: ${event.acceleration?.y?.toFixed(2)}
-  // Z: ${event.acceleration?.z?.toFixed(2)}`;
-};
-
 document.body.appendChild(canvas);
 document.body.appendChild(orientationOutput);
-// document.body.appendChild(accelerationOutput);
 document.body.appendChild(accelerationMeter);
 
 window.addEventListener('deviceorientation', handleOrientation);
-window.addEventListener('devicemotion', handleMotion);
-
-// screen.orientation.addEventListener('change', (event) => {
-//   const type = event.target.type;
-//   const angle = event.target.angle;
-//   console.log(`ScreenOrientation change: ${type}, ${angle} degrees.`);
-// });

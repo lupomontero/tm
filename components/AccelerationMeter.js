@@ -2,7 +2,6 @@ class AccelerationMeter extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-
     this.shadowRoot.innerHTML = `
       <style>
         .meter {
@@ -70,18 +69,20 @@ class AccelerationMeter extends HTMLElement {
     this.spanX = this.shadowRoot.querySelector('.x > span');
     this.spanY = this.shadowRoot.querySelector('.y > span');
     this.spanZ = this.shadowRoot.querySelector('.z > span');
+
+    this.handleMotion = this.handleMotion.bind(this);
   }
 
   connectedCallback() {
     if (window.DeviceMotionEvent) {
-      window.addEventListener('devicemotion', this.handleMotion.bind(this));
+      window.addEventListener('devicemotion', this.handleMotion);
     } else {
       console.warn('DeviceMotionEvent is not supported.');
     }
   }
 
   disconnectedCallback() {
-    window.removeEventListener('devicemotion', this.handleMotion.bind(this));
+    window.removeEventListener('devicemotion', this.handleMotion);
   }
 
   handleMotion(event) {
