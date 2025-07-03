@@ -34,6 +34,15 @@ class AccelerationMeter extends HTMLElement {
           transform-origin: bottom center;
           transform: rotate(45deg);
         }
+        .axis > span {
+          display: inline-block;
+          width: 100%;
+          height: 0%;
+          position: absolute;
+          bottom: 50%;
+          left: 0;
+          transform-origin: bottom center;
+        }
       </style>
       <div class="meter">
         <div class="x axis">
@@ -51,15 +60,13 @@ class AccelerationMeter extends HTMLElement {
     this.spanY = this.shadowRoot.querySelector('.y > span');
     this.spanZ = this.shadowRoot.querySelector('.z > span');
 
-    this.spanX.style.display = 'inline-block';
-    this.spanX.style.height = '0%';
-    this.spanX.style.width = '100%';
-    this.spanX.style.position = 'absolute';
-    this.spanX.style.bottom = '50%';
-    this.spanX.style.left = '0';
-    this.spanX.style.transformOrigin = 'bottom center';
+    // this.spanX.style.bottom = '50%';
+    // this.spanX.style.left = '0';
+    // this.spanX.style.transformOrigin = 'bottom center';
 
     this.spanX.style.backgroundColor = 'blue';
+    this.spanY.style.backgroundColor = 'green';
+    this.spanZ.style.backgroundColor = 'red';
   }
 
   connectedCallback() {
@@ -75,12 +82,12 @@ class AccelerationMeter extends HTMLElement {
   }
 
   handleMotion(event) {
-    this.setAcceleration({
-      x: 1.3,
-      y: 0.3,
-      z: 0,
-    });
-    // this.setAcceleration(event.acceleration);
+    // this.setAcceleration({
+    //   x: 1.3,
+    //   y: -0.3,
+    //   z: -0.5,
+    // });
+    this.setAcceleration(event.acceleration);
   }
 
   setAcceleration({ x, y, z }) {
@@ -88,6 +95,18 @@ class AccelerationMeter extends HTMLElement {
     this.spanX.style.height = `${Math.round(percentX / 2)}%`;
     if (x < 0) {
       this.spanX.style.transform = 'rotate(180deg)';
+    }
+
+    const percentY = Math.min(Math.abs((y * 100) / 1.5), 100);
+    this.spanY.style.height = `${Math.round(percentY / 2)}%`;
+    if (y < 0) {
+      this.spanY.style.transform = 'rotate(180deg)';
+    }
+
+    const percentZ = Math.min(Math.abs((z * 100) / 1.5), 100);
+    this.spanZ.style.height = `${Math.round(percentZ / 2)}%`;
+    if (z < 0) {
+      this.spanZ.style.transform = 'rotate(180deg)';
     }
   }
 }
