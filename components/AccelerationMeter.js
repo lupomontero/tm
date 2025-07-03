@@ -4,9 +4,9 @@ class AccelerationMeter extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = `
       <style>
-        .meter {
-          width: 80px;
-          height: 80px;
+        .container {
+          width: 0;
+          height: 0;
           border: 1px solid #ddd;
           border-radius: 50%;
           position: relative;
@@ -14,23 +14,23 @@ class AccelerationMeter extends HTMLElement {
         .axis {
           position: absolute;
           width: 2px;
-          height: 80px;
+          height: 100%;
           background-color: #ccc;
         }
         .x {
-          bottom: 39px;
-          left: 0px;
+          bottom: 50%;
+          left: 0;
           transform-origin: bottom center;
           transform: rotate(90deg);
         }
         .y {
-          top: 0px;
-          left: 39px;
+          top: 0;
+          left: 50%;
           transform-origin: bottom center;
         }
         .z {
-          bottom: 10px;
-          left: 10px;
+          bottom: 14.5%;
+          left: 14.5%;
           transform-origin: bottom center;
           transform: rotate(45deg);
         }
@@ -53,7 +53,7 @@ class AccelerationMeter extends HTMLElement {
           background-color: red;
         }
       </style>
-      <div class="meter">
+      <div class="container">
         <div class="x axis">
           <span></span>
         </div>
@@ -66,6 +66,7 @@ class AccelerationMeter extends HTMLElement {
       </div>
     `;
 
+    this.container = this.shadowRoot.querySelector('.container');
     this.spanX = this.shadowRoot.querySelector('.x > span');
     this.spanY = this.shadowRoot.querySelector('.y > span');
     this.spanZ = this.shadowRoot.querySelector('.z > span');
@@ -74,6 +75,14 @@ class AccelerationMeter extends HTMLElement {
   }
 
   connectedCallback() {
+    console.log('AccelerationMeter connected', this.parentElement.clientWidth);
+    const diameter = Math.min(
+      this.parentElement.clientWidth,
+      this.parentElement.clientHeight,
+    ) - 60; // Subtracting 40 for padding/margin
+    this.container.style.width = `${diameter}px`;
+    this.container.style.height = `${diameter}px`;
+
     if (window.DeviceMotionEvent) {
       window.addEventListener('devicemotion', this.handleMotion);
     } else {
