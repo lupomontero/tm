@@ -63,16 +63,15 @@ class LeanAngleGauge extends HTMLElement {
   }
 
   resize() {
-    const isLandscape = screen.orientation.type.startsWith('landscape');
-    const width = Math.min(
-      isLandscape
-        ? this.parentElement.clientWidth / 2
-        : this.parentElement.clientWidth,
-      this.parentElement.clientHeight,
-    ) - 40; // Subtracting 40 for padding/margin
-    const height = width / 2;
+    setTimeout(() => {
+      const width = Math.min(
+        this.parentElement.clientWidth,
+        this.parentElement.clientHeight,
+      ) - 40; // Subtracting 40 for padding/margin
+      const height = width / 2;
 
-    Object.assign(this.canvas, { width, height });
+      Object.assign(this.canvas, { width, height });
+    }); // Allow time for the DOM to settle
   }
 
   handleOrientation(event) {
