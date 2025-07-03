@@ -75,17 +75,17 @@ class AccelerationMeter extends HTMLElement {
   }
 
   handleMotion(event) {
-    // this.setAcceleration({
-    //   x: 0.9,
-    //   y: 0.3,
-    //   z: 0,
-    // });
-    this.setAcceleration(event.acceleration);
+    this.setAcceleration({
+      x: 1.3,
+      y: 0.3,
+      z: 0,
+    });
+    // this.setAcceleration(event.acceleration);
   }
 
   setAcceleration({ x, y, z }) {
-    const percentX = x >= 1.5 ? 100 : Math.abs((x * 100) / 1.5);
-    this.spanX.style.height = `${percentX / 2}%`;
+    const percentX = Math.min(Math.abs((x * 100) / 1.5), 100);
+    this.spanX.style.height = `${Math.round(percentX / 2)}%`;
     if (x < 0) {
       this.spanX.style.transform = 'rotate(180deg)';
     }
