@@ -82,12 +82,12 @@ class AccelerationMeter extends HTMLElement {
   }
 
   handleMotion(event) {
-    this.setAcceleration({
-      x: -1.3,
-      y: -0.3,
-      z: -0.5,
-    });
-    // this.setAcceleration(event.acceleration);
+    // this.setAcceleration({
+    //   x: -1.3,
+    //   y: -0.3,
+    //   z: -0.5,
+    // });
+    this.setAcceleration(event.acceleration);
   }
 
   setAcceleration({ x, y, z }) {
