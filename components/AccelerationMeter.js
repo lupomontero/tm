@@ -75,13 +75,7 @@ class AccelerationMeter extends HTMLElement {
   }
 
   connectedCallback() {
-    console.log('AccelerationMeter connected', this.parentElement.clientWidth);
-    const diameter = Math.min(
-      this.parentElement.clientWidth,
-      this.parentElement.clientHeight,
-    ) - 60; // Subtracting 40 for padding/margin
-    this.container.style.width = `${diameter}px`;
-    this.container.style.height = `${diameter}px`;
+    this.resize();
 
     if (window.DeviceMotionEvent) {
       window.addEventListener('devicemotion', this.handleMotion);
@@ -94,7 +88,18 @@ class AccelerationMeter extends HTMLElement {
     window.removeEventListener('devicemotion', this.handleMotion);
   }
 
+  resize() {
+    const diameter = Math.min(
+      this.parentElement.clientWidth,
+      this.parentElement.clientHeight,
+    ) - 60; // Subtracting 40 for padding/margin
+    this.container.style.width = `${diameter}px`;
+    this.container.style.height = `${diameter}px`;
+  }
+
   handleMotion(event) {
+    this.resize();
+
     const { x, y, z } = event.acceleration;
     // const { x = 0.5, y = 1, z = -0.5 } = {};
 
