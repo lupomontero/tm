@@ -94,9 +94,7 @@ class AccelerationMeter extends HTMLElement {
     const percentX = Math.min(Math.abs((x * 100) / 1.5), 100);
     this.spanX.style.height = `${Math.round(percentX / 2)}%`;
     this.spanX.textContent = `${x.toFixed(2)}`;
-    if (x < 0) {
-      this.spanX.style.transform = 'rotate(180deg)';
-    }
+    this.spanX.style.transform = x < 0 ? 'rotate(180deg)' : 'none';
 
     const percentY = Math.min(Math.abs((y * 100) / 1.5), 100);
     this.spanY.style.height = `${Math.round(percentY / 2)}%`;
