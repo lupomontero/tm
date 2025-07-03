@@ -7,15 +7,16 @@ class AccelerationMeter extends HTMLElement {
         .container {
           width: 0;
           height: 0;
-          border: 1px solid light-dark(#ddd, #444);
+          background-color: rgba(0, 0, 0, 0.1);
+          border: 1px solid var(--stroke-bg);
           border-radius: 50%;
           position: relative;
         }
         .axis {
           position: absolute;
-          width: 2px;
+          width: 1px;
           height: 100%;
-          background-color: light-dark(#ccc, #555);
+          background-color: var(--stroke-bg);
         }
         .x {
           bottom: 50%;
@@ -44,13 +45,13 @@ class AccelerationMeter extends HTMLElement {
           transform-origin: bottom center;
         }
         .x > span {
-          background-color: blue;
+          background-color: rgba(0, 0, 255, 0.5);
         }
         .y > span {
-          background-color: green;
+          background-color: rgba(0, 255, 0, 0.5);
         }
         .z > span {
-          background-color: red;
+          background-color: rgba(255, 0, 0, 0.5);
         }
       </style>
       <div class="container">
@@ -101,8 +102,8 @@ class AccelerationMeter extends HTMLElement {
   }
 
   handleMotion(event) {
-    const { x, y, z } = event.acceleration;
-    // const { x = 0.5, y = 1, z = -0.5 } = {};
+    // const { x, y, z } = event.acceleration;
+    const { x = 0.5, y = 1, z = -0.5 } = {};
 
     const isLandscape = screen.orientation.type.startsWith('landscape');
 

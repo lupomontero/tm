@@ -2,8 +2,6 @@ class LeanAngleGauge extends HTMLElement {
   constructor() {
     super();
 
-    console.log(this.attributes);
-
     //
     this.min = 0;
     this.max = 0;

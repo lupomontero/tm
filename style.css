@@ -7,8 +7,9 @@
   --secondary-color: #536390;
   --font-color: #424242;
   --bg-color: #fff;
-  --bg-transparent: rgba(0, 0, 0, 0.2);
+  --bg-transparent: rgba(0, 0, 0, 0.1);
   --heading-color: #292922;
+  --stroke-bg: rgba(0, 0, 0, 0.3);
 }
 
 [data-color-scheme="dark"] {
@@ -16,8 +17,9 @@
   --secondary-color: #818cab;
   --font-color: #e1e1ff;
   --bg-color: #161625;
-  --bg-transparent: rgba(255, 255, 255, 0.2);
+  --bg-transparent: rgba(0, 0, 0, 0.2);
   --heading-color: #818cab;
+  --stroke-bg: rgba(255, 255, 255, 0.3);
 }
 
 * {
