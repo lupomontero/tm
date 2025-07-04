@@ -82,9 +82,15 @@ class LeanAngleGauge extends HTMLElement {
   handleOrientation(event) {
     const isLandscape = screen.orientation.type.startsWith('landscape');
     const degrees = isLandscape ? event.beta : event.gamma; // gamma for landscape, beta for portrait
-    const radians = degrees * (Math.PI / 180);
     const { width, height } = this.canvas;
     const isDarkMode = document.documentElement.getAttribute('data-color-scheme') === 'dark';
+
+    if (degrees < this.min) {
+      this.min = degrees;
+    }
+    if (degrees > this.max) {
+      this.max = degrees;
+    }
 
     this.ctx.clearRect(0, 0, width, height);
 
@@ -100,21 +106,30 @@ class LeanAngleGauge extends HTMLElement {
     this.ctx.lineWidth = 1;
     this.ctx.stroke();
 
-    // Draw needle
-    const pointX = (Math.sin(radians) * height) + (width / 2);
-    const pointY = height - (Math.cos(radians) * height);
+    const drawRadius = (angle, lineWidth) => {
+      const radians = angle * (Math.PI / 180);
+      const pointX = (Math.sin(radians) * height) + (width / 2);
+      const pointY = height - (Math.cos(radians) * height);
 
-    this.ctx.lineWidth = 5;
-    this.ctx.beginPath();
-    this.ctx.moveTo(width / 2, height);
-    this.ctx.lineTo(pointX, pointY);
-    this.ctx.strokeStyle = (
-      isDarkMode
-        ? 'rgba(255, 255, 255, 0.5)'
-        : 'rgba(0, 0, 0, 0.5)'
-    );
-    this.ctx.stroke();
-    this.ctx.closePath();
+      this.ctx.lineWidth = lineWidth;
+      this.ctx.beginPath();
+      this.ctx.moveTo(width / 2, height);
+      this.ctx.lineTo(pointX, pointY);
+      this.ctx.strokeStyle = (
+        isDarkMode
+          ? 'rgba(255, 255, 255, 0.5)'
+          : 'rgba(0, 0, 0, 0.5)'
+      );
+      this.ctx.stroke();
+      this.ctx.closePath();
+    };
+
+    // Draw min line
+    drawRadius(this.min, 1);
+    // Draw max line
+    drawRadius(this.max, 1);
+    // Draw needle
+    drawRadius(degrees, 5);
 
     this.output.textContent = `${degrees?.toFixed(2) || '?'}°`;
   }
